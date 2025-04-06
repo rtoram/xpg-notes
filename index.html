@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPGNotes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Barra de Navegação Superior -->
+    <header>
+        <h1>XPGNotes</h1>
+        <input type="text" id="search-input" placeholder="Busque links, notas ou eventos..." onkeyup="searchContent()">
+        <button id="theme-btn" onclick="toggleTheme()">Tema Escuro</button>
+        <button onclick="showInstructions()">Ajuda</button>
+    </header>
+
+    <!-- Barra Lateral -->
+    <div class="sidebar">
+        <button onclick="showSection('links')">Links</button>
+        <button onclick="showSection('notes')">Notas</button>
+        <button onclick="showSection('calendar')">Agenda</button>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="content">
+        <!-- Seção Links -->
+        <section id="links-section" class="section">
+            <h2>Links</h2>
+            <div class="input-group">
+                <input type="text" id="link-input" placeholder="Cole o link aqui">
+                <input type="text" id="tag-input" placeholder="Adicione uma tag">
+                <button onclick="addLink()">Adicionar</button>
+            </div>
+            <div id="pinned-links" class="pinned-section"><h3>Fixados</h3></div>
+            <ul id="link-list"></ul>
+            <div class="actions">
+                <button onclick="exportSection('links')">Exportar</button>
+                <button onclick="printSection('links')">Imprimir</button>
+            </div>
+        </section>
+
+        <!-- Seção Notas -->
+        <section id="notes-section" class="section hidden">
+            <h2>Notas</h2>
+            <div class="input-group">
+                <input type="text" id="note-title" placeholder="Título da nota">
+                <textarea id="note-input" placeholder="Digite sua nota"></textarea>
+                <input type="file" id="note-attachment" accept="image/*,.pdf,.txt">
+                <select id="note-background" onchange="previewBackground()">
+                    <option value="">Fundo Padrão</option>
+                    <option value="#1e3a8a">Azul Escuro</option>
+                    <option value="#166534">Verde Escuro</option>
+                </select>
+                <button onclick="saveNote()">Salvar</button>
+            </div>
+            <div id="pinned-notes" class="pinned-section"><h3>Fixados</h3></div>
+            <ul id="note-list"></ul>
+            <div class="actions">
+                <button onclick="exportSection('notes')">Exportar</button>
+                <button onclick="printSection('notes')">Imprimir</button>
+            </div>
+        </section>
+
+        <!-- Seção Agenda -->
+        <section id="calendar-section" class="section hidden">
+            <h2>Agenda</h2>
+            <div class="input-group">
+                <input type="datetime-local" id="event-datetime">
+                <input type="text" id="event-input" placeholder="Descreva o evento">
+                <button onclick="addEvent()">Adicionar</button>
+            </div>
+            <ul id="event-list"></ul>
+            <div class="actions">
+                <button onclick="exportSection('calendar')">Exportar</button>
+                <button onclick="printSection('calendar')">Imprimir</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
