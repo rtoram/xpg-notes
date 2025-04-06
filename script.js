@@ -1,3 +1,4 @@
+
 window.onload = function() {
     loadLinks();
     loadNotes();
@@ -110,8 +111,28 @@ function savePinnedNotes() {
 }
 
 function loadNotes() {
-    document.getElementById('note-list').innerHTML = localStorage.getItem('notes') || '';
-    document.getElementById('pinned-notes').innerHTML = localStorage.getItem('pinned-notes') || '<h3>Fixados</h3>';
+    const notesData = localStorage.getItem('notes');
+    const pinnedNotesData = localStorage.getItem('pinned-notes');
+    
+    // Validação para evitar carregar dados inválidos
+    const noteList = document.getElementById('note-list');
+    const pinnedNotes = document.getElementById('pinned-notes');
+    
+    // Carrega notas apenas se for HTML válido, caso contrário limpa
+    if (notesData && notesData.startsWith('<li')) {
+        noteList.innerHTML = notesData;
+    } else {
+        noteList.innerHTML = '';
+        localStorage.removeItem('notes'); // Remove dados corrompidos
+    }
+
+    // Carrega notas fixadas, com fallback para o padrão
+    if (pinnedNotesData && pinnedNotesData.includes('<h3>Fixados</h3>')) {
+        pinnedNotes.innerHTML = pinnedNotesData;
+    } else {
+        pinnedNotes.innerHTML = '<h3>Fixados</h3>';
+        localStorage.removeItem('pinned-notes'); // Remove dados corrompidos
+    }
 }
 
 function clearNoteInputs() {
